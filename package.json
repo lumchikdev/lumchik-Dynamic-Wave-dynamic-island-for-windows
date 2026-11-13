@@ -1,0 +1,75 @@
+{
+  "name": "dynamic-wave",
+  "productName": "Dynamic Wave",
+  "version": "1.9.0",
+  "description": "Dynamic Wave for Windows",
+  "author": {
+    "name": "nocturne"
+  },
+  "contributors": [
+    "m.alesuada | .sentinal"
+  ],
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "icon": "node build/make-icon.js",
+    "dist": "electron build/make-logo.js && node build/make-icon.js && electron-builder --win portable && node build/make-update.js && node build/make-release.js",
+    "dist:nsis": "node build/make-icon.js && electron-builder --win nsis",
+    "test": "node --test test/smartlayout.test.js test/smartlayout.service.test.js test/pro.test.js",
+    "test:uia": "node test/smartlayout.uia.js",
+    "calibrate": "node test/smartlayout.calibrate.js"
+  },
+  "build": {
+    "appId": "com.dynamicwave.app",
+    "productName": "Dynamic Wave",
+    "copyright": "© 2026 nocturne. Автор: m.alesuada | .sentinal",
+    "electronVersion": "33.2.1",
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**",
+      "renderer/**",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "src/helper.ps1",
+      "src/smartlayout/monitor.ps1",
+      "src/selection-bounds.ps1"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "DynamicWave-Setup-${version}.exe",
+      "unpackDirName": "DynamicWaveSetup"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Dynamic Wave",
+      "runAfterFinish": true,
+      "artifactName": "DynamicWave-Setup-${version}.exe"
+    },
+    "npmRebuild": false
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "sql.js": "^1.11.0",
+    "telegram": "^2.26.22",
+    "vosk-browser": "^0.0.8"
+  },
+  "dwUpdateUrl": "https://drive.google.com/file/d/1U_YBVxd4H6PFR3upUXpRxjEkcpb6WSZm/view?usp=sharing"
+}
